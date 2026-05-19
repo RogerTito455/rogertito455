@@ -43,4 +43,5 @@ Check out my portfolio: [Portfolio](https://portfolio-sigma-three-mofepuvl2w.ver
 ---
 [![](https://visitcount.itsvg.in/api?id=RogerTito455&icon=0&color=0)](https://visitcount.itsvg.in)
 
+https://visitor-badge.laobi.icu/badge?page_id=RogerTito455.RogerTito455
 
