@@ -1,0 +1,87 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 880 320" width="880" height="320" role="img" aria-label="Roger Tito Farez — junior developer, Barcelona. DAW 2025–2027. Internal tools and workflow automations. Available for internships from summer 2026.">
+  <defs>
+    <linearGradient id="hbgL" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#ffffff"/>
+      <stop offset="50%" stop-color="#fbfcfe"/>
+      <stop offset="100%" stop-color="#eef2f7"/>
+    </linearGradient>
+    <linearGradient id="haccL" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0%" stop-color="#1a7f37"/>
+      <stop offset="40%" stop-color="#0969da"/>
+      <stop offset="75%" stop-color="#8250df"/>
+      <stop offset="100%" stop-color="#bf3989"/>
+    </linearGradient>
+    <linearGradient id="hw1L" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0%" stop-color="#1a7f37"/><stop offset="55%" stop-color="#0969da"/><stop offset="100%" stop-color="#8250df"/>
+    </linearGradient>
+    <linearGradient id="hw2L" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0%" stop-color="#0969da"/><stop offset="60%" stop-color="#8250df"/><stop offset="100%" stop-color="#bf3989"/>
+    </linearGradient>
+    <linearGradient id="hruleL" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0%" stop-color="#d0d7de"/><stop offset="70%" stop-color="#d0d7de" stop-opacity="0.35"/><stop offset="100%" stop-color="#d0d7de" stop-opacity="0"/>
+    </linearGradient>
+    <radialGradient id="hglowAL" cx="0.88" cy="0.08" r="0.7">
+      <stop offset="0%" stop-color="#0969da" stop-opacity="0.13"/><stop offset="100%" stop-color="#0969da" stop-opacity="0"/>
+    </radialGradient>
+    <radialGradient id="hglowBL" cx="0.06" cy="0.95" r="0.6">
+      <stop offset="0%" stop-color="#1a7f37" stop-opacity="0.10"/><stop offset="100%" stop-color="#1a7f37" stop-opacity="0"/>
+    </radialGradient>
+    <pattern id="hdotL" width="18" height="18" patternUnits="userSpaceOnUse">
+      <circle cx="1.2" cy="1.2" r="1.2" fill="#1f2328" fill-opacity="0.045"/>
+    </pattern>
+    <clipPath id="hclipL"><rect width="880" height="320" rx="12"/></clipPath>
+    <clipPath id="htypeL">
+      <rect x="44" y="160" width="400" height="26">
+        <animate attributeName="width" values="0;400;400" keyTimes="0;0.26;1" dur="4s" repeatCount="indefinite"/>
+      </rect>
+    </clipPath>
+  </defs>
+
+  <g clip-path="url(#hclipL)">
+    <rect width="880" height="320" fill="url(#hbgL)"/>
+    <rect width="880" height="320" fill="url(#hdotL)"/>
+    <rect width="880" height="320" fill="url(#hglowAL)"/>
+    <rect width="880" height="320" fill="url(#hglowBL)"/>
+
+    <path d="M0,268 C120,246 210,290 320,276 C430,262 520,240 640,258 C740,273 810,296 880,282 L880,320 L0,320 Z" fill="url(#hw1L)" fill-opacity="0.10"/>
+    <path d="M0,284 C110,266 220,304 340,290 C460,276 560,258 670,276 C760,291 820,308 880,296 L880,320 L0,320 Z" fill="url(#hw2L)" fill-opacity="0.15"/>
+    <path d="M0,300 C130,286 230,314 350,304 C470,294 580,280 700,296 C790,308 830,316 880,309 L880,320 L0,320 Z" fill="url(#hw1L)" fill-opacity="0.24"/>
+
+    <rect width="880" height="3" fill="url(#haccL)"/>
+  </g>
+
+  <text x="44" y="54" fill="#59636e" font-size="12" letter-spacing="3.5" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, 'Liberation Mono', monospace">R / T</text>
+  <text x="836" y="54" fill="#59636e" font-size="12" letter-spacing="1.2" text-anchor="end" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, 'Liberation Mono', monospace">barcelona · es</text>
+  <rect x="44" y="72" width="792" height="1" fill="url(#hruleL)"/>
+
+  <text x="44" y="140" fill="#1f2328" font-size="48" font-weight="700" letter-spacing="-1.8" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, 'Liberation Mono', monospace">roger tito farez</text>
+
+  <g clip-path="url(#htypeL)">
+    <text x="44" y="179" fill="#59636e" font-size="18" letter-spacing="0.2" opacity="1" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, 'Liberation Mono', monospace">junior developer · daw 2025–2027
+      <animate attributeName="opacity" values="1;1;0;0" keyTimes="0;0.32;0.34;1" dur="12s" repeatCount="indefinite"/>
+    </text>
+    <text x="44" y="179" fill="#0969da" font-size="18" letter-spacing="0.2" opacity="0" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, 'Liberation Mono', monospace">internal tools &amp; workflow automation
+      <animate attributeName="opacity" values="0;0;1;1;0;0" keyTimes="0;0.33;0.35;0.65;0.67;1" dur="12s" repeatCount="indefinite"/>
+    </text>
+    <text x="44" y="179" fill="#1a7f37" font-size="18" letter-spacing="0.2" opacity="0" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, 'Liberation Mono', monospace">open to internships — summer 2026
+      <animate attributeName="opacity" values="0;0;1;1;0" keyTimes="0;0.66;0.68;0.98;1" dur="12s" repeatCount="indefinite"/>
+    </text>
+  </g>
+  <rect x="44" y="163" width="2" height="20" fill="#0969da">
+    <animate attributeName="x" values="44;444;444" keyTimes="0;0.26;1" dur="4s" repeatCount="indefinite"/>
+    <animate attributeName="opacity" values="1;1;0;0;1" keyTimes="0;0.45;0.5;0.95;1" dur="1.1s" repeatCount="indefinite"/>
+  </rect>
+
+  <rect x="44" y="200" width="366" height="36" rx="18" fill="#1a7f37" fill-opacity="0.09" stroke="#1a7f37" stroke-opacity="0.38"/>
+  <circle cx="68" cy="218" r="4.5" fill="#1a7f37"/>
+  <circle cx="68" cy="218" r="4.5" fill="none" stroke="#1a7f37" stroke-width="1.4">
+    <animate attributeName="r" values="4.5;13" dur="2.6s" repeatCount="indefinite"/>
+    <animate attributeName="opacity" values="0.7;0" dur="2.6s" repeatCount="indefinite"/>
+  </circle>
+  <text x="86" y="223" fill="#1a7f37" font-size="13" letter-spacing="0.3" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, 'Liberation Mono', monospace">available for internships — summer 2026</text>
+
+  <text x="836" y="216" fill="#9a6700" font-size="12.5" letter-spacing="0.6" text-anchor="end" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, 'Liberation Mono', monospace">metropolisfplab 2026 · winner</text>
+  <text x="836" y="233" fill="#818b98" font-size="11.5" letter-spacing="0.5" text-anchor="end" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, 'Liberation Mono', monospace">training platform for mesoestetic</text>
+
+  <rect x="0.5" y="0.5" width="879" height="319" rx="12" fill="none" stroke="#d0d7de"/>
+</svg>
