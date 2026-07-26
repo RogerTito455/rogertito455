@@ -1,46 +1,97 @@
-# 💫 About Me:
-DAW (Web Application Development) student focused on building real-world projects with modern web technologies. I’m driven by impact, clean code, and continuous improvement, and I’m looking to collaborate on projects where I can learn fast, take ownership, and contribute at scale.
-Check out my portfolio: [Portfolio](https://portfolio-sigma-three-mofepuvl2w.vercel.app/)  
+<picture>
+  <source media="(prefers-color-scheme: dark)" srcset="assets/hero-dark.svg">
+  <source media="(prefers-color-scheme: light)" srcset="assets/hero-light.svg">
+  <img alt="Roger Tito Farez — junior developer, Barcelona. DAW 2025–2027. Internal tools and workflow automations. Available for internships from summer 2026." src="assets/hero-light.svg" width="100%">
+</picture>
 
-## 🌐 Socials
-[![LinkedIn](https://img.shields.io/badge/LinkedIn-%230077B5.svg?logo=linkedin&logoColor=white)](https://www.linkedin.com/in/roger-tito-farez-035ab626b/)  
+<p align="center">
+  <a href="https://rogertito.com"><b>Portfolio</b></a>
+  &nbsp;&nbsp;·&nbsp;&nbsp;
+  <a href="https://www.linkedin.com/in/roger-tito-farez-035ab626b/"><b>LinkedIn</b></a>
+  &nbsp;&nbsp;·&nbsp;&nbsp;
+  <a href="mailto:crtitofarez@gmail.com"><b>crtitofarez@gmail.com</b></a>
+</p>
 
-# 💻 Tech Stack
-![PHP](https://img.shields.io/badge/php-%23777BB4.svg?style=for-the-badge&logo=php&logoColor=white) 
-![JavaScript](https://img.shields.io/badge/javascript-%23323330.svg?style=for-the-badge&logo=javascript&logoColor=%23F7DF1E) 
-![Java](https://img.shields.io/badge/java-%23ED8B00.svg?style=for-the-badge&logo=openjdk&logoColor=white) 
-![HTML5](https://img.shields.io/badge/html5-%23E34F26.svg?style=for-the-badge&logo=html5&logoColor=white) 
-![CSS3](https://img.shields.io/badge/css3-%231572B6.svg?style=for-the-badge&logo=css3&logoColor=white) 
-![PowerShell](https://img.shields.io/badge/PowerShell-%235391FE.svg?style=for-the-badge&logo=powershell&logoColor=white) 
-![Python](https://img.shields.io/badge/python-3670A0?style=for-the-badge&logo=python&logoColor=ffdd54) 
-![NPM](https://img.shields.io/badge/NPM-%23CB3837.svg?style=for-the-badge&logo=npm&logoColor=white) 
-![Next JS](https://img.shields.io/badge/Next-black?style=for-the-badge&logo=next.js&logoColor=white) 
-![React](https://img.shields.io/badge/react-%2320232a.svg?style=for-the-badge&logo=react&logoColor=%2361DAFB) 
-![Astro](https://img.shields.io/badge/Astro-%2300ADEF.svg?style=for-the-badge&logo=astro&logoColor=white) 
-![MySQL](https://img.shields.io/badge/mysql-4479A1.svg?style=for-the-badge&logo=mysql&logoColor=white) 
-![Canva](https://img.shields.io/badge/Canva-%2300C4CC.svg?style=for-the-badge&logo=Canva&logoColor=white) 
-![Figma](https://img.shields.io/badge/figma-%23F24E1E.svg?style=for-the-badge&logo=figma&logoColor=white) 
-![Gimp](https://img.shields.io/badge/Gimp-657D8B?style=for-the-badge&logo=gimp&logoColor=FFFFFF) 
-![GitHub Actions](https://img.shields.io/badge/github%20actions-%232671E5.svg?style=for-the-badge&logo=githubactions&logoColor=white) 
-![GitHub](https://img.shields.io/badge/github-%23121011.svg?style=for-the-badge&logo=github&logoColor=white) 
-![GitLab](https://img.shields.io/badge/gitlab-%23181717.svg?style=for-the-badge&logo=gitlab&logoColor=white) 
-![ESLint](https://img.shields.io/badge/ESLint-4B3263?style=for-the-badge&logo=eslint&logoColor=white) 
-![Notion](https://img.shields.io/badge/Notion-%23000000.svg?style=for-the-badge&logo=notion&logoColor=white) 
-![Prettier](https://img.shields.io/badge/prettier-%23F7B93E.svg?style=for-the-badge&logo=prettier&logoColor=black) 
-![Trello](https://img.shields.io/badge/Trello-%23026AA7.svg?style=for-the-badge&logo=Trello&logoColor=white)
+## 01 · about
 
-# 📊 GitHub Stats
-![](https://github-readme-stats.vercel.app/api?username=RogerTito455&theme=react&hide_border=false&include_all_commits=true&count_private=false)<br/>
-![](https://nirzak-streak-stats.vercel.app/?user=RogerTito455&theme=react&hide_border=false)<br/>
-![](https://github-readme-stats.vercel.app/api/top-langs/?username=RogerTito455&theme=react&hide_border=false&include_all_commits=true&count_private=false&layout=compact)
+I build internal tools and workflow automations with **Claude in the loop** — and I treat AI as a tool to supervise, not a shortcut to skip thinking.
 
-## 🏆 GitHub Trophies
-![](https://github-profile-trophy.vercel.app/?username=RogerTito455&theme=radical&no-frame=false&no-bg=true&margin-w=4)
+The honest version: the model writes roughly 90% of the keystrokes. The remaining 10% is where the work actually is — scoping the problem, choosing what's worth shipping, debugging what the model got wrong, and making sure I still understand every line that ends up in `main`.
 
-### ✍️ Random Dev Quote
-![](https://quotes-github-readme.vercel.app/api?type=horizontal&theme=radical)
+First year of the DAW programme in Barcelona (2025–2027). In 2026 I won **MetropolisFPLab** with Training Hub, an internal training-analytics platform built for the pharmaceutical group mesoestetic. Outside class I run my own Linux VPS and build internal tools on Next.js and Astro.
 
----
-[![](https://visitcount.itsvg.in/api?id=RogerTito455&icon=0&color=0)](https://visitcount.itsvg.in)
+> [!NOTE]
+> Most repositories are private while in development. I'm happy to walk through any of them line by line in a call — including what Claude drafted and what I deliberately kept for myself.
 
-![Visitor Count](https://visitor-badge.laobi.icu/badge?page_id=RogerTito455)
+## 02 · selected work
+
+|  | project | status | stack |
+|:--|:--|:--|:--|
+| `001` | **Training Hub** — for mesoestetic | 🏆 `MetropolisFPLab 2026 winner` | Next.js · TypeScript |
+| `002` | **Forever Events** | `shipped` · May 2026 | PHP · MySQL · JS |
+| `003` | **rogertito.com** | `shipped` · Apr 2026 | Astro · TypeScript · Tailwind |
+| `004` | **Self-hosted observability stack** | `in dev` · Apr 2026 | Docker · Traefik · Linux |
+
+<br/>
+
+### `001` Training Hub — mesoestetic
+
+**🏆 Winner, MetropolisFPLab 2026.** Built for mesoestetic, a pharmaceutical group.
+
+**The brief:** the company spends thousands of hours a year on staff training and has no reliable way to know whether any of it changes how people actually work.
+
+Implementation details are confidential to the client engagement. Happy to talk through my role and the reasoning behind the approach in a call.
+
+`Next.js` `TypeScript`
+
+### `002` Forever Events
+
+Four-person event-management platform built on a hand-rolled PHP MVC structure — no framework. Authentication, profile management and the full event lifecycle.
+
+`PHP` `MySQL` `HTML` `CSS` `JavaScript`
+
+### `003` rogertito.com
+
+My portfolio, rebuilt from scratch as an honest counter to the generic AI-styled developer site. Static output with a single JS island, and a token-based design system — Tailwind v4 mapped onto custom CSS variables, theme-aware throughout, with view transitions that survive a theme swap.
+
+`Astro` `TypeScript` `Tailwind CSS` `Cloudflare Workers & Pages`
+
+### `004` Self-hosted observability stack
+
+Real-time monitoring, alerting and access control for my Hostinger VPS, without a SaaS bill. Around ten containers behind an edge proxy doing TLS and rate limiting, bcrypt auth on every dashboard, and only `:80` and `:443` reachable from outside.
+
+`Docker` `Traefik` `Beszel` `Uptime Kuma` `Dozzle` `Linux (Ubuntu)`
+
+## 03 · stack
+
+<picture>
+  <source media="(prefers-color-scheme: dark)" srcset="assets/stack-dark.svg">
+  <source media="(prefers-color-scheme: light)" srcset="assets/stack-light.svg">
+  <img alt="Stack in three tiers. Core, without thinking: Claude, HTML, CSS. Working, I ship with it: TypeScript, JavaScript, Node.js, Astro, n8n, Linux, Docker, Traefik, Cloudflare, Git, MySQL, SQL, Java. Exploring, learning where it fits: OpenAI API, Python." src="assets/stack-light.svg" width="100%">
+</picture>
+
+<sub>Diagram generated by [`assets/gen_stack.py`](assets/gen_stack.py) — the tier list is the source of truth, the layout is computed.</sub>
+
+## 04 · education
+
+| | |
+|:--|:--|
+| **CFGS Desarrollo de Aplicaciones Web (DAW)** | Barcelona · 2025–2027 · first year |
+
+Fundamentals during coursework are done **deliberately AI-free**. If I can't write it myself, I don't claim it.
+
+## 05 · contact
+
+Looking for an **internship or junior role** on a team that ships AI-assisted products and treats engineering quality as part of the product, not a phase that comes after.
+
+Barcelona — on-site, hybrid or remote. Available from summer 2026.
+
+I usually reply within a day or two. Reach out even if the fit isn't obvious.
+
+<p align="center">
+  <a href="mailto:crtitofarez@gmail.com"><b>crtitofarez@gmail.com</b></a>
+  &nbsp;&nbsp;·&nbsp;&nbsp;
+  <a href="https://www.linkedin.com/in/roger-tito-farez-035ab626b/"><b>LinkedIn</b></a>
+  &nbsp;&nbsp;·&nbsp;&nbsp;
+  <a href="https://rogertito.com"><b>rogertito.com</b></a>
+</p>
