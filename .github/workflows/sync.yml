@@ -1,0 +1,51 @@
+# Keeps this profile in step with rogertito.com: every day (and on demand) it
+# regenerates the cards and README from the site's profile.json, and commits
+# only when something changed. Public repository, so the minutes are free.
+name: Sync with rogertito.com
+
+on:
+  schedule:
+    - cron: "17 6 * * *"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: sync
+  cancel-in-progress: false
+
+jobs:
+  sync:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Fonts cache
+        uses: actions/cache@v4
+        with:
+          path: assets/.font-cache
+          key: fonts-${{ hashFiles('assets/gen_cards.py') }}
+          restore-keys: fonts-
+
+      - run: pip install fonttools brotli
+
+      - name: Regenerate from rogertito.com/profile.json
+        run: python3 assets/gen_cards.py
+
+      - name: Commit if anything changed
+        run: |
+          if [ -z "$(git status --porcelain -- README.md assets)" ]; then
+            echo "Already in step with rogertito.com."
+            exit 0
+          fi
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add -A README.md assets
+          git commit -m "docs: sync with rogertito.com"
+          git push

@@ -1,9 +1,14 @@
 #!/usr/bin/env python3
 """Generate every card in the profile README, and the README itself.
 
-Copy, colours, roles, projects and stack keys all live in the DATA section
-below. Text is measured with the real fonts, so wrapping, chip widths and card
-heights are computed: edit the data, re-run, done.
+The words are rogertito.com's: the portfolio publishes its copy as
+https://rogertito.com/profile.json (in the page's order, in English), this
+script reads it — or assets/profile.json, the last copy it read, when the site
+cannot be reached — and .github/workflows/sync.yml runs it every day, so the
+profile follows the site. To change a word, change the portfolio. What lives
+here is only how the profile draws it: colours, mascots, tilts. Text is
+measured with the real fonts, so wrapping, chip widths and card heights are
+computed.
 
 The SVGs are shown through <img>, which cannot load web fonts, so each file
 embeds the glyphs it uses as subsetted WOFF2 (Bricolage Grotesque, Figtree,
@@ -12,11 +17,14 @@ assets/.font-cache/ (gitignored).
 
     pip install fonttools brotli
     python3 assets/gen_cards.py
+    PROFILE_URL=http://127.0.0.1:4321/profile.json python3 assets/gen_cards.py  # a local build
 """
 
 import base64
 import io
+import json
 import math
+import os
 import pathlib
 import re
 import urllib.request
@@ -30,252 +38,191 @@ CACHE = HERE / ".font-cache"
 # DATA
 # ═══════════════════════════════════════════════════════════════════════════
 
-LINKS = {
-    "portfolio": "https://rogertito.com",
-    "linkedin": "https://www.linkedin.com/in/roger-tito-farez-035ab626b/",
-    "email": "crtitofarez@gmail.com",
-}
+# The words come from the portfolio: rogertito.com/profile.json is its copy in
+# English, in the page's order (src/pages/profile.json.ts in the portfolio
+# repo). It is fetched on every run and kept in assets/profile.json, which is
+# also the fallback when the site cannot be reached. What lives here is only
+# what the profile draws differently from the site: colours, mascots, tilts,
+# and a few labels that only make sense on GitHub.
 
-HERO = {
-    "hello": "hola, I'm",
-    "name": "Roger Tito Farez",
-    "lead": "Full-stack developer in Barcelona. I build internal tools and "
-            "workflow automations with Claude in the loop.",
-    "pills": [("Full Stack Dev · mesoestetic®", True), ("DAW · 2nd year", False)],
-    "rosette": ("WINNER", "MetròpolisFPLab", "2026"),
-    "bubble": "¡hola!",
-    "hack": ("HackBarna", "2026"),
-    "nvidia": "built with NVIDIA Nemotron",
-    "note": "my sidekick",
-}
+PROFILE_URL = os.environ.get("PROFILE_URL", "https://rogertito.com/profile.json")
+PROFILE_CACHE = HERE / "profile.json"
+PROFILE_VERSION = 1
 
-ABOUT = [
-    "I build internal tools and workflow automations with **Claude in the "
-    "loop** — and I treat AI as a tool to supervise, not a shortcut to skip "
-    "thinking.",
-    "The model writes roughly 90% of the keystrokes. The remaining 10% is "
-    "where the work actually is — scoping the problem, choosing what's worth "
-    "shipping, debugging what the model got wrong, and making sure I still "
-    "understand every line that ends up in `main`.",
-    "Second year of DAW in Barcelona (2025–2027). Coursework fundamentals are "
-    "done **deliberately AI-free**: if I can't write it myself, I don't claim "
-    "it. Most repositories are private while in development; I'm happy to "
-    "walk through any of them line by line in a call.",
-]
 
-# key, number, title, handwritten aside, sticker tint
-SECTIONS = [
-    ("about", "01", "About", "the honest version", "sky"),
-    ("experience", "02", "Experience", "3 roles, right now", "mint"),
-    ("work", "03", "Selected work", "6 projects", "butter"),
-    ("ai", "04", "AI engineering", "how I actually build", "lavender"),
-    ("stack", "05", "Stack", "daily · real projects · exploring", "peach"),
-    ("contact", "06", "Contact", "Barcelona", "pink"),
-]
+def load_profile():
+    try:
+        req = urllib.request.Request(PROFILE_URL, headers={"User-Agent": "gen_cards"})
+        with urllib.request.urlopen(req, timeout=20) as r:
+            raw = r.read().decode("utf-8")
+        json.loads(raw)
+        PROFILE_CACHE.write_text(raw, encoding="utf-8")
+        print(f"read {PROFILE_URL}")
+    except Exception as e:  # offline, or the site is down: last known copy
+        if not PROFILE_CACHE.exists():
+            raise SystemExit(f"cannot read {PROFILE_URL} ({e}) and no cache")
+        raw = PROFILE_CACHE.read_text(encoding="utf-8")
+        print(f"read assets/profile.json ({PROFILE_URL} unreachable: {e})")
+    data = json.loads(raw)
+    if data.get("version") != PROFILE_VERSION:
+        raise SystemExit(f"profile.json is version {data.get('version')}; "
+                         f"this generator reads {PROFILE_VERSION}")
+    return data
+
+
+P = load_profile()
+
+# ── what the profile draws its own way ────────────────────────────────────
 
 TINTS = {"mint": "#cdeebc", "lavender": "#ddd2fd", "peach": "#ffd9c6",
          "sky": "#d6e7ff", "butter": "#ffeaa8", "pink": "#ffd3dc"}
 
-METRO = {
-    "kicker": "Lines running in 2026",
-    "title": "3 roles at once",
-    "aside": "all three, right now!",
-    "months": ["Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct"],
-    "today": "Today",
+# the binder's tab colours, per chapter
+SECTION_TINT = {"experience": "mint", "work": "butter", "ai": "lavender",
+                "stack": "sky", "about": "pink", "contact": "peach"}
+
+# metro lines, by role key
+ROLE_LOOK = {
+    "mesoestetic": {"line": "#3fb560", "label_ink": "#23843f",
+                    "bg": ("#e6f6da", "#cdeebc"), "mascot": ("happy", "laptop")},
+    "proven": {"line": "#8b6cff", "label_ink": "#5a3fd6",
+               "bg": ("#efe9ff", "#ddd2fd"), "mascot": ("calm", "magnifier")},
+    "esypa": {"line": "#ff8a5c", "label_ink": "#b8501f",
+              "bg": ("#fff0e6", "#ffd9c6"), "mascot": ("wave", "hardhat")},
+}
+ROLE_DEFAULT = {"line": "#3b7bea", "label_ink": "#2856b0",
+                "bg": ("#e3eeff", "#c9dcfb"), "mascot": ("calm", "none")}
+
+# work cards, by item key; a new item without an entry gets the next of these
+PROJECT_LOOK = {
+    "trainingHub": {"dot": "#e0a100", "bg": ("#fff4cf", "#ffe6a0"),
+                    "mascot": ("sparkle", "trophy"), "tilt": -0.8},
+    "hackfire": {"dot": "#ff5a2c", "bg": ("#ffe4da", "#ffcbb8"),
+                 "mascot": ("happy", "headset"), "tilt": 0.8},
+    "garantia": {"dot": "#3f8f2a", "bg": ("#e5f6da", "#c9ecb4"),
+                 "mascot": ("calm", "receipt"), "tilt": 0.8},
+    "site": {"dot": "#3b7bea", "bg": ("#e3eeff", "#c9dcfb"),
+             "mascot": ("sparkle", "laptop"), "tilt": -0.8},
+    "spectranet": {"dot": "#e8456b", "bg": ("#ffe4ea", "#fcc9d4"),
+                   "mascot": ("calm", "hardhat"), "tilt": -0.8},
+    "esypaAutomation": {"dot": "#7c5cff", "bg": ("#eee8ff", "#dacffd"),
+                        "mascot": ("happy", "laptop"), "tilt": 0.8},
+}
+PROJECT_DEFAULTS = [look for look in PROJECT_LOOK.values()]
+LINK_LABEL = {"hackfire": "Open the case"}  # anything else with a link: "Visit"
+
+# stack clusters, by group key: dot, daily key, its shadow
+STACK_LOOK = {
+    "ai": ("#8b6cff", "#d9ccff", "#b3a0f5"),
+    "frontend": ("#3b7bea", "#cfe2ff", "#9fc0f0"),
+    "backend": ("#3fb560", "#cdeebc", "#9fd38a"),
+    "infra": ("#ff8a5c", "#ffd6c2", "#f2ad8c"),
+    "quality": ("#e0a100", "#ffe9a3", "#e8c860"),
 }
 
-ROLES = [
-    {
-        "badge": "m", "line_label": "mesoestetic®", "start": 5,
-        "line": "#3fb560", "label_ink": "#23843f",
-        "bg": ("#e6f6da", "#cdeebc"),
-        "role": "Full Stack Developer",
-        "company": "mesoestetic® Pharma Group",
-        "meta": "Sep 2026 – now · Viladecans, hybrid · training contract",
-        "bullets": [
-            "Internal app for the group, built in a team of four. "
-            "Confidential — happy to talk it through.",
-            "AI-assisted development: Claude Code and MCP built into the "
-            "team's daily workflow.",
-            "Won mesoestetic's challenge at MetròpolisFPLab (Fundació BCN FP · "
-            "Barcelona Metropolitan Area).",
-        ],
-        "stack": ["Next.js 16", "React 19", "TypeScript", "Tailwind 4",
-                  "PostgreSQL", "Radix UI", "Recharts"],
-        "mascot": ("happy", "laptop"),
-    },
-    {
-        "badge": "P", "line_label": "PROVEN", "start": 3,
-        "line": "#8b6cff", "label_ink": "#5a3fd6",
-        "bg": ("#efe9ff", "#ddd2fd"),
-        "role": "QA Testing",
-        "company": "PROVEN",
-        "meta": "Jul 2026 – now · remote · part-time",
-        "bullets": [
-            "QA for a platform that validates real skills via self-assessment "
-            "and anonymous peer review.",
-            "Jira backlog shaped into epics, problems and features; defects "
-            "followed from report to close.",
-            "Mentored by Jon Kern, co-author of the Agile Manifesto, on agile "
-            "delivery practice.",
-        ],
-        "stack": ["Jira", "Confluence", "Playwright", "Agile"],
-        "mascot": ("calm", "magnifier"),
-    },
-    {
-        "badge": "E", "line_label": "ESYPA CASA", "start": 0,
-        "line": "#ff8a5c", "label_ink": "#b8501f",
-        "bg": ("#fff0e6", "#ffd9c6"),
-        "role": "Full Stack Developer",
-        "company": "ESYPA CASA · reformas integrales",
-        "meta": "Apr 2026 – now · Barcelona, hybrid · part-time",
-        "bullets": [
-            "Internal app replacing a manual process with an automated one — "
-            "real people depend on it.",
-            "I set up and run its infrastructure: private VPS, domain and DNS "
-            "on Cloudflare, n8n workflows.",
-            "AI with clear limits: the model structures and drafts, but never "
-            "decides the numbers.",
-        ],
-        "stack": ["TypeScript", "Node.js", "PostgreSQL", "Docker", "n8n",
-                  "Cloudflare"],
-        "mascot": ("wave", "hardhat"),
-    },
-]
+SUBAGENT_MASCOTS = [("calm", "magnifier"), ("happy", "laptop"), ("calm", "shield")]
 
-PROJECTS = [
-    {
-        "slug": "training-hub", "kicker": "MetròpolisFPLab 2026",
-        "dot": "#e0a100", "bg": ("#fff4cf", "#ffe6a0"),
-        "title": "Training Hub", "number": "Winner",
-        "sub": "mesoestetic® challenge",
-        "desc": "Internal training-analytics platform for mesoestetic®, built "
-                "in a team of four. The implementation is confidential — happy "
-                "to walk through my part in a call.",
-        "stack": ["Next.js", "TypeScript", "PostgreSQL"],
-        "link": None, "mascot": ("sparkle", "trophy"), "tilt": -0.8,
-    },
-    {
-        "slug": "hackfire", "kicker": "HackBarna 2026",
-        "dot": "#ff5a2c", "bg": ("#ffe4da", "#ffcbb8"),
-        "title": "HackFire", "number": "6 h 08 min",
-        "sub": "early warning on the Ávila fire replay",
-        "desc": "Built at HackBarna for the Deepfire wildfire challenge: a "
-                "voice agent that calls residents ahead of the fire, routes "
-                "them out and ranks who needs rescue.",
-        "stack": ["Python", "React", "Nemotron", "SLNG"],
-        "link": ("View repo", "https://github.com/RogerTito455/hackfire"),
-        "mascot": ("happy", "headset"), "tilt": 0.8,
-    },
-    {
-        "slug": "garantia", "kicker": "NVIDIA · archived",
-        "dot": "#3f8f2a", "bg": ("#e5f6da", "#c9ecb4"),
-        "title": "garantia", "number": "10 / 10",
-        "sub": "receipt dates read right, in 6 languages",
-        "desc": "Snap a receipt: an open NVIDIA model reads it, deterministic "
-                "code applies the consumer law of the country of purchase and "
-                "drafts the claim letter.",
-        "stack": ["TypeScript", "Astro", "PostgreSQL", "Nemotron"],
-        "link": None, "mascot": ("calm", "receipt"), "tilt": 0.8,
-    },
-    {
-        "slug": "rogertito-com", "kicker": "Shipped · Apr 2026",
-        "dot": "#3b7bea", "bg": ("#e3eeff", "#c9dcfb"),
-        "title": "rogertito.com", "number": "1 JS island",
-        "sub": "everything else is static HTML",
-        "desc": "My portfolio, rebuilt from scratch as an honest counter to "
-                "the generic AI-styled developer site, on a token-based design "
-                "system.",
-        "stack": ["Astro", "Tailwind", "Cloudflare"],
-        "link": ("Visit", "https://rogertito.com"),
-        "mascot": ("sparkle", "laptop"), "tilt": -0.8,
-    },
-    {
-        "slug": "forever-events", "kicker": "Shipped · May 2026",
-        "dot": "#e8456b", "bg": ("#ffe4ea", "#fcc9d4"),
-        "title": "Forever Events", "number": "0 frameworks",
-        "sub": "a hand-rolled PHP MVC, team of four",
-        "desc": "Event-management platform with authentication, profile "
-                "management and the full event lifecycle — every layer written "
-                "by hand.",
-        "stack": ["PHP", "MySQL", "JavaScript"],
-        "link": None, "mascot": ("dizzy", "none"), "tilt": -0.8,
-    },
-    {
-        "slug": "observability", "kicker": "Self-hosted · in dev",
-        "dot": "#7c5cff", "bg": ("#eee8ff", "#dacffd"),
-        "title": "Observability stack", "number": ":80 · :443",
-        "sub": "the only ports open to the outside",
-        "desc": "Monitoring, alerting and access control for my VPS without a "
-                "SaaS bill: about ten containers behind an edge proxy, bcrypt "
-                "auth on every dashboard.",
-        "stack": ["Docker", "Traefik", "Linux"],
-        "link": None, "mascot": ("calm", "shield"), "tilt": 0.8,
-    },
-]
 
+def kebab(key):
+    return re.sub(r"(?<!^)([A-Z])", r"-\1", key).lower()
+
+
+# ── the site's words, shaped for the cards ────────────────────────────────
+
+LINKS = P["links"]
+
+_stickers = P["hero"]["stickers"]
+HERO = {
+    "hello": P["hero"]["hello"],
+    "name": P["hero"]["name"],
+    "lead": P["hero"]["lead"],
+    "pills": [(c, i == 0) for i, c in enumerate(P["hero"]["chips"][:2])],
+    "rosette": (_stickers["winner"], _stickers["winnerOf"], _stickers["winnerYear"]),
+    "bubble": "¡hola!",
+    "hack": (_stickers["hackbarna"], _stickers["hackbarnaYear"]),
+    "nvidia": _stickers["nemotron"],
+    "note": "my sidekick",
+}
+
+_notes = {s["key"]: s["note"] for s in P["sections"]}
+_legend = P["stack"]["legend"]
+# The headers carry a short fact; the cards under them carry the site's
+# handwritten note for that chapter.
+_section_aside = {
+    "experience": _notes["experience"],
+    "work": f'{len(P["work"]["items"])} projects',
+    "ai": "how I actually build",
+    "stack": " · ".join([_legend["daily"], "real projects", _legend["exploring"]]),
+    "about": _notes["about"],
+    "contact": P["about"]["facts"][0]["value"],
+}
+# key, number, title, handwritten aside, sticker tint — in the page's order
+SECTIONS = [(s["key"], s["num"], s["title"], _section_aside[s["key"]],
+             SECTION_TINT.get(s["key"], "sky")) for s in P["sections"]]
+
+METRO = {
+    "kicker": P["experience"]["label"],
+    "title": P["experience"]["title"],
+    "aside": P["experience"]["aboard"],
+    "months": P["experience"]["months"],
+    "today": P["experience"]["today"],
+}
+
+ROLES = [{
+    **ROLE_LOOK.get(r["key"], ROLE_DEFAULT),
+    "badge": r["line"], "line_label": r["lineName"], "start": r["start"],
+    "role": r["role"], "company": r["company"],
+    "meta": f'{r["dates"]} · {r["place"]}',
+    "bullets": r["bullets"], "stack": r["tags"],
+} for r in P["experience"]["roles"]]
+
+PROJECTS = [{
+    **(PROJECT_LOOK.get(p["key"])
+       or PROJECT_DEFAULTS[i % len(PROJECT_DEFAULTS)]),
+    "slug": "rogertito-com" if p["key"] == "site" else kebab(p["key"]),
+    "kicker": p["kicker"], "title": p["name"], "number": p["big"],
+    "sub": p["sub"], "desc": p["text"], "stack": p["tags"],
+    "link": (LINK_LABEL.get(p["key"], "Visit"), p["url"]) if p["url"] else None,
+} for i, p in enumerate(P["work"]["items"])]
+
+_chain = P["ai"]["chain"]
 AI = {
-    "aside": "my favourite part",
-    "title": "Claude, past autocomplete.",
-    "intro": "How a feature actually gets built: I own the scope and the "
-             "merge, the agents do the legwork in between.",
-    "me": ("Me", "scope · decide"),
-    "orchestrator": ("Claude Code", "plans, splits the work, orchestrates"),
-    "subagents_label": "PARALLEL SUBAGENTS",
-    "subagents": [
-        ("explore", "maps the codebase", ("calm", "magnifier")),
-        ("build", "test first, small slices", ("happy", "laptop")),
-        ("review", "fresh context, fresh eyes", ("calm", "shield")),
-    ],
-    "ship": ("main", "only what I understand"),
-    "me_note": "that's me",
-    "context": ("Context it starts with",
-                ["CLAUDE.md", "AGENTS.md", "Skills", "MCP servers", "Memory",
-                 "Context engineering"]),
-    "guardrails": ("Guardrails I keep",
-                   ["Evals vs hand-written truth", "Schema-validated output",
-                    "Model reads, code decides", "I review every merge"]),
+    "aside": _notes["ai"],
+    "title": P["ai"]["headline"],
+    "intro": P["ai"]["lead"],
+    "me": (_chain["me"], _chain["meSub"]),
+    "orchestrator": (_chain["claude"], _chain["claudeSub"]),
+    "subagents_label": _chain["parallel"].upper(),
+    "subagents": [(a["name"], a["sub"], SUBAGENT_MASCOTS[i % 3])
+                  for i, a in enumerate(_chain["agents"])],
+    "ship": (_chain["main"], _chain["mainSub"]),
+    "me_note": _chain["thatsMe"],
+    "context": (P["ai"]["contextLabel"], P["ai"]["context"]),
+    "guardrails": (P["ai"]["guardrailsLabel"], P["ai"]["guardrails"]),
 }
 
 # level: "daily" | "used" (in real projects) | "exploring"
 D, U, X = "daily", "used", "exploring"
 STACK = {
-    "legend": [(D, "daily"), (U, "used in real projects"), (X, "exploring")],
-    "aside": "the keys I actually press",
-    "clusters": [
-        ("AI & agents", "#8b6cff", "#d9ccff", "#b3a0f5", [
-            ("Claude Code", D), ("Subagents & orchestration", D),
-            ("Context engineering", D), ("Skills", D), ("MCP servers", D),
-            ("n8n", U), ("NVIDIA NIM", U), ("Voice agents", U),
-            ("OpenAI API", X)]),
-        ("Frontend", "#3b7bea", "#cfe2ff", "#9fc0f0", [
-            ("HTML", D), ("CSS", D), ("TypeScript", D), ("React", D),
-            ("Next.js", D), ("Tailwind CSS", D), ("JavaScript", U),
-            ("Astro", U), ("Recharts", U), ("Radix · shadcn", U),
-            ("MapLibre", X)]),
-        ("Backend & data", "#3fb560", "#cdeebc", "#9fd38a", [
-            ("Node.js", D), ("PostgreSQL", D), ("PHP", U), ("Symfony", U),
-            ("MySQL", U), ("Drizzle", U), ("Power BI", U), ("Java", U),
-            ("Python", X)]),
-        ("Infra & DevOps", "#ff8a5c", "#ffd6c2", "#f2ad8c", [
-            ("Docker", D), ("Linux VPS", D), ("Cloudflare", D), ("GitHub", D),
-            ("Traefik", U), ("GitHub Actions", U), ("Railway", U)]),
-        ("Quality & process", "#e0a100", "#ffe9a3", "#e8c860", [
-            ("Jira", D), ("Agile", D), ("Playwright", U), ("Vitest", U),
-            ("zod", U), ("Confluence", U)]),
-    ],
+    "legend": [(D, _legend["daily"]), (U, _legend["used"]),
+               (X, _legend["exploring"])],
+    "aside": _notes["stack"],
+    "clusters": [(g["name"], *STACK_LOOK.get(g["key"], STACK_LOOK["frontend"]),
+                  [(k["label"], k["level"]) for k in g["keys"]])
+                 for g in P["stack"]["groups"]],
 }
 
 CONTACT = {
-    "aside": "drop me a line",
-    "title": "Say hi.",
-    "text": "Barcelona — on-site, hybrid or remote. Reach out even if the fit "
-            "isn't obvious.",
+    "aside": _notes["contact"],
+    "title": P["contact"]["title"],
+    "text": P["contact"]["lead"],
     "stamp_corner": "BCN · 26",
-    "stamp_kicker": "USUALLY REPLIES IN",
-    "stamp_value": "1–2 days",
+    "stamp_kicker": P["contact"]["replyLabel"],
+    "stamp_value": P["contact"]["reply"],
     "postmark": ("BARCELONA", "OCT · 2026"),
 }
+
+ABOUT = P["about"]
 
 # ═══════════════════════════════════════════════════════════════════════════
 # FONTS
@@ -1358,13 +1305,14 @@ def build_contact():
 # ═══════════════════════════════════════════════════════════════════════════
 
 def hero_alt():
-    return (f"{HERO['name']} — {HERO['lead']} Now: Full Stack Developer at "
-            f"mesoestetic®, second year of DAW. Stickers: MetròpolisFPLab 2026 "
-            f"winner, HackBarna 2026, built with NVIDIA Nemotron.")
+    rosette = " ".join(HERO["rosette"][1:]) + " " + HERO["rosette"][0].lower()
+    return (f"{HERO['name']} — {HERO['lead']} "
+            f"{' · '.join(c for c, _ in HERO['pills'])}. Stickers: {rosette}, "
+            f"{' '.join(HERO['hack'])}, {HERO['nvidia']}.")
 
 
 def experience_alt():
-    parts = ["Experience — three roles at once in 2026."]
+    parts = [f"Experience — {METRO['title']}."]
     for r in ROLES:
         parts.append(f"{r['role']}, {r['company']} ({r['meta']}): "
                      + " ".join(r["bullets"]) + " Stack: "
@@ -1379,15 +1327,16 @@ def project_alt(p):
 
 def ai_alt():
     subs = "; ".join(f"{t} ({b})" for t, b, _ in AI["subagents"])
-    return (f"AI engineering — {AI['title']} {AI['intro']} I scope and decide; "
-            f"Claude Code plans and orchestrates parallel subagents: {subs}; "
-            f"only what I understand reaches main. {AI['context'][0]}: "
+    me, orch, ship = AI["me"], AI["orchestrator"], AI["ship"]
+    return (f"AI engineering — {AI['title']} {AI['intro']} {me[0]}: {me[1]}; "
+            f"{orch[0]}: {orch[1]}, with {AI['subagents_label'].lower()}: "
+            f"{subs}; {ship[0]}: {ship[1]}. {AI['context'][0]}: "
             f"{', '.join(AI['context'][1])}. {AI['guardrails'][0]}: "
             f"{', '.join(AI['guardrails'][1])}.")
 
 
 def stack_alt():
-    names = {D: "daily", U: "used in real projects", X: "exploring"}
+    names = dict(STACK["legend"])
     parts = ["Stack by area and level."]
     for name, _, _, _, keys in STACK["clusters"]:
         by = defaultdict(list)
@@ -1401,7 +1350,8 @@ def stack_alt():
 
 def contact_alt():
     return (f"Contact — {CONTACT['title']} {CONTACT['text']} "
-            f"{LINKS['email']}. Usually replies in 1–2 days.")
+            f"{LINKS['email']}. {CONTACT['stamp_kicker'].capitalize()} "
+            f"{CONTACT['stamp_value']}.")
 
 
 # ═══════════════════════════════════════════════════════════════════════════
@@ -1425,9 +1375,45 @@ def section_md(key):
             f'</picture>\n')
 
 
+def about_md():
+    a = ABOUT
+    facts = " · ".join(f'{f["label"]} **{f["value"]}**' for f in a["facts"])
+    services = "\n".join(f'- **{s["title"]}** — {s["text"]}'
+                         for s in a["services"]["items"])
+    return "\n\n".join([f'**{a["headline"]}**', *a["paragraphs"],
+                         f'<sub>{facts}</sub>',
+                         f'**{a["services"]["label"]}**', services]) + "\n"
+
+
+def work_md():
+    cards = []
+    for p in PROJECTS:
+        img = (f'<img alt="{attr(project_alt(p))}" '
+               f'src="assets/work-{p["slug"]}.svg" width="49%">')
+        cards.append(f'<a href="{p["link"][1]}">{img}</a>' if p["link"]
+                     else img)
+    rows = [cards[i:i + 2] for i in range(0, len(cards), 2)]
+    return '<p align="center">\n' + "\n".join(
+        "  " + "\n  ".join(r) + ("\n  <br>" if i < len(rows) - 1 else "")
+        for i, r in enumerate(rows)) + "\n</p>\n"
+
+
 def build_readme():
-    out = ["<!-- Generated by assets/gen_cards.py — edit the data there and "
-           "re-run, not this file. -->\n",
+    body = {
+        "experience": lambda: (f'<img alt="{attr(experience_alt())}" '
+                               f'src="assets/experience.svg" width="100%">\n'),
+        "work": work_md,
+        "ai": lambda: (f'<img alt="{attr(ai_alt())}" '
+                       f'src="assets/ai-engineering.svg" width="100%">\n'),
+        "stack": lambda: (f'<img alt="{attr(stack_alt())}" '
+                          f'src="assets/stack.svg" width="100%">\n'),
+        "about": about_md,
+        "contact": lambda: (f'<a href="mailto:{LINKS["email"]}"><img '
+                            f'alt="{attr(contact_alt())}" '
+                            f'src="assets/contact.svg" width="100%"></a>\n'),
+    }
+    out = ["<!-- Generated by assets/gen_cards.py from rogertito.com/profile.json "
+           "— edit the portfolio, not this file. -->\n",
            f'<a href="{LINKS["portfolio"]}"><img alt="{attr(hero_alt())}" '
            f'src="assets/hero.svg" width="100%"></a>\n',
            f'<p align="center">\n'
@@ -1436,35 +1422,14 @@ def build_readme():
            f'  <a href="{LINKS["linkedin"]}"><b>LinkedIn</b></a>\n'
            f'  &nbsp;&nbsp;·&nbsp;&nbsp;\n'
            f'  <a href="mailto:{LINKS["email"]}"><b>{LINKS["email"]}</b></a>\n'
-           f'</p>\n',
-           section_md("about"),
-           "\n".join(ABOUT) .replace("\n", "\n\n") + "\n",
-           section_md("experience"),
-           f'<img alt="{attr(experience_alt())}" src="assets/experience.svg" '
-           f'width="100%">\n',
-           section_md("work")]
-    cards = []
-    for p in PROJECTS:
-        img = (f'<img alt="{attr(project_alt(p))}" '
-               f'src="assets/work-{p["slug"]}.svg" width="49%">')
-        cards.append(f'<a href="{p["link"][1]}">{img}</a>' if p["link"]
-                     else img)
-    rows = [cards[i:i + 2] for i in range(0, len(cards), 2)]
-    out.append('<p align="center">\n' + "\n".join(
-        "  " + "\n  ".join(r) + ("\n  <br>" if i < len(rows) - 1 else "")
-        for i, r in enumerate(rows)) + "\n</p>\n")
-    out += [section_md("ai"),
-            f'<img alt="{attr(ai_alt())}" src="assets/ai-engineering.svg" '
-            f'width="100%">\n',
-            section_md("stack"),
-            f'<img alt="{attr(stack_alt())}" src="assets/stack.svg" '
-            f'width="100%">\n',
-            section_md("contact"),
-            f'<a href="mailto:{LINKS["email"]}"><img alt="{attr(contact_alt())}"'
-            f' src="assets/contact.svg" width="100%"></a>\n',
-            '<sub>Cards generated by <a href="assets/gen_cards.py">'
-            '<code>assets/gen_cards.py</code></a> — the data is the source of '
-            'truth, the layout is computed.</sub>\n']
+           f'</p>\n']
+    for key, *_ in SECTIONS:
+        out += [section_md(key), body[key]()]
+    out.append('<sub>Kept in sync with <a href="https://rogertito.com">'
+               'rogertito.com</a>: <a href="assets/gen_cards.py"><code>'
+               'assets/gen_cards.py</code></a> reads the site\'s '
+               '<code>profile.json</code> every day and redraws these cards.'
+               '</sub>\n')
     return "\n".join(out)
 
 
@@ -1487,6 +1452,11 @@ def main():
         svg = build().render()
         (HERE / name).write_text(svg, encoding="utf-8")
         print(f"wrote assets/{name:<34} {len(svg.encode()) / 1024:6.1f} KB")
+    made = {name for name, _ in jobs}
+    for old in HERE.glob("*.svg"):
+        if old.name not in made:
+            old.unlink()
+            print(f"removed assets/{old.name}")
     (ROOT / "README.md").write_text(build_readme(), encoding="utf-8")
     print("wrote README.md")
 

@@ -1,0 +1,547 @@
+{
+  "version": 1,
+  "source": "https://rogertito.com/en/",
+  "links": {
+    "portfolio": "https://rogertito.com/en/",
+    "github": "https://github.com/RogerTito455",
+    "linkedin": "https://www.linkedin.com/in/roger-tito-farez-035ab626b/",
+    "email": "crtitofarez@gmail.com"
+  },
+  "hero": {
+    "hello": "hola, I’m",
+    "name": "Roger Tito Farez",
+    "lead": "Full-stack developer in Barcelona. I build internal tools, workflow automations and the tests that keep them honest — with Claude in the loop.",
+    "chips": [
+      "Full Stack Dev · mesoestetic®",
+      "DAW · 2nd year",
+      "Català · Español · English"
+    ],
+    "stickers": {
+      "winner": "WINNER",
+      "winnerOf": "MetròpolisFPLab",
+      "winnerYear": "2026",
+      "hackbarna": "HackBarna",
+      "hackbarnaYear": "2026",
+      "nemotron": "built with NVIDIA Nemotron"
+    }
+  },
+  "sections": [
+    {
+      "key": "experience",
+      "num": "01",
+      "title": "Experience",
+      "note": "3 lines, one stop: today"
+    },
+    {
+      "key": "work",
+      "num": "02",
+      "title": "Selected work",
+      "note": "pick a folder — someone’s hiding"
+    },
+    {
+      "key": "ai",
+      "num": "03",
+      "title": "AI engineering",
+      "note": "my favourite part"
+    },
+    {
+      "key": "stack",
+      "num": "04",
+      "title": "Stack",
+      "note": "the keys I actually press"
+    },
+    {
+      "key": "about",
+      "num": "05",
+      "title": "About",
+      "note": "the honest version"
+    },
+    {
+      "key": "contact",
+      "num": "06",
+      "title": "Say hi",
+      "note": "drop me a line"
+    }
+  ],
+  "experience": {
+    "label": "Lines running in 2026",
+    "title": "3 roles at once",
+    "aboard": "all aboard!",
+    "today": "Today",
+    "months": [
+      "Apr",
+      "May",
+      "Jun",
+      "Jul",
+      "Aug",
+      "Sep",
+      "Oct"
+    ],
+    "roles": [
+      {
+        "key": "mesoestetic",
+        "line": "m",
+        "lineName": "mesoestetic®",
+        "start": 5,
+        "role": "Full Stack Developer",
+        "company": "mesoestetic® Pharma Group · training contract",
+        "dates": "Sep 2026 → now",
+        "place": "Viladecans · hybrid",
+        "bullets": [
+          "Internal app that measures what employees learn in the training they take, built in a team of four.",
+          "AI-assisted development: Claude Code and MCP built into the team’s daily workflow.",
+          "Won mesoestetic’s challenge at MetròpolisFPLab (Fundació BCN FP · Barcelona Metropolitan Area)."
+        ],
+        "tags": [
+          "Next.js 16",
+          "React 19",
+          "TypeScript",
+          "Tailwind 4",
+          "PostgreSQL",
+          "Radix UI",
+          "Recharts"
+        ]
+      },
+      {
+        "key": "proven",
+        "line": "P",
+        "lineName": "PROVEN",
+        "start": 3,
+        "role": "QA Testing",
+        "company": "PROVEN · talent validation platform",
+        "dates": "Jul 2026 → now",
+        "place": "Remote · part-time",
+        "bullets": [
+          "QA for a platform that validates real skills via self-assessment and anonymous peer review.",
+          "Jira backlog shaped into epics, problems and features; defects followed from report to close.",
+          "Mentored by Jon Kern, co-author of the Agile Manifesto, on agile delivery practice."
+        ],
+        "tags": [
+          "Jira",
+          "Confluence",
+          "Playwright",
+          "Gherkin",
+          "Agile"
+        ]
+      },
+      {
+        "key": "esypa",
+        "line": "E",
+        "lineName": "ESYPA CASA",
+        "start": 0,
+        "role": "Full Stack Developer",
+        "company": "ESYPA CASA · reformas integrales · part-time",
+        "dates": "Apr 2026 → now",
+        "place": "Barcelona · hybrid",
+        "bullets": [
+          "Internal app replacing a manual process with an automated one — real people depend on it.",
+          "I set up and run its infrastructure: private VPS, domain and DNS on Cloudflare, n8n workflows.",
+          "AI with clear limits: the model structures and drafts, but never decides the numbers."
+        ],
+        "tags": [
+          "TypeScript",
+          "Node.js",
+          "PostgreSQL",
+          "Docker",
+          "n8n",
+          "Cloudflare"
+        ]
+      }
+    ]
+  },
+  "work": {
+    "lead": "Six things I built or helped build, each with the number that proves it.",
+    "items": [
+      {
+        "key": "trainingHub",
+        "name": "Training Hub",
+        "kicker": "MetròpolisFPLab 2026 · for mesoestetic®",
+        "big": "1st place",
+        "sub": "mesoestetic® challenge, team of four",
+        "text": "An internal app that measures what employees learn in the training they take. The implementation is confidential — happy to walk through my part in a call.",
+        "stamp": "WINNER",
+        "tags": [
+          "NEXT.JS",
+          "TYPESCRIPT",
+          "POSTGRESQL"
+        ],
+        "url": null
+      },
+      {
+        "key": "hackfire",
+        "name": "HackFire",
+        "kicker": "HackBarna 2026 · Norrsken House",
+        "big": "6 h 08 min",
+        "sub": "early warning on the Ávila fire replay",
+        "text": "A voice agent that calls residents ahead of a wildfire, routes them out and ranks who needs rescue for the coordinator.",
+        "stamp": "HACKATHON",
+        "tags": [
+          "PYTHON",
+          "REACT",
+          "NEMOTRON"
+        ],
+        "url": "https://rogertito.com/en/cases/hackfire/"
+      },
+      {
+        "key": "garantia",
+        "name": "garantia",
+        "kicker": "Own project · NVIDIA Nemotron",
+        "big": "10 / 10",
+        "sub": "receipt dates read right, in 6 languages",
+        "text": "Snap a receipt: an open model reads it, deterministic code applies the consumer law of the country of purchase and drafts the claim letter.",
+        "stamp": "ARCHIVED",
+        "tags": [
+          "TYPESCRIPT",
+          "ASTRO",
+          "ZOD"
+        ],
+        "url": null
+      },
+      {
+        "key": "site",
+        "name": "rogertito.com",
+        "kicker": "Astro + three.js · 2026",
+        "big": "3D binder",
+        "sub": "the portfolio, in three.js",
+        "text": "My portfolio: a ring binder in three.js over static Astro, bilingual, with the same sticker kit and sidekick as this profile.",
+        "stamp": "PORTFOLIO",
+        "tags": [
+          "ASTRO",
+          "THREE.JS",
+          "CLOUDFLARE"
+        ],
+        "url": "https://rogertito.com/en/"
+      },
+      {
+        "key": "spectranet",
+        "name": "Spectranet",
+        "kicker": "SaaS · product",
+        "big": "estimates",
+        "sub": "for renovation companies",
+        "text": "An app for renovation companies to put together their construction estimates.",
+        "stamp": "PRODUCT",
+        "tags": [
+          "SAAS"
+        ],
+        "url": null
+      },
+      {
+        "key": "esypaAutomation",
+        "name": "Internal automation",
+        "kicker": "Ongoing · for ESYPA CASA",
+        "big": "every day",
+        "sub": "people depend on it",
+        "text": "An internal project for ESYPA CASA that turns manual processes into automated ones. AI structures and drafts, but never decides the numbers; the rest is confidential.",
+        "stamp": "INTERNAL",
+        "tags": [
+          "TYPESCRIPT",
+          "N8N",
+          "POSTGRESQL"
+        ],
+        "url": null
+      }
+    ]
+  },
+  "ai": {
+    "headline": "Claude, past autocomplete.",
+    "lead": "How a feature actually gets built: I own the scope and the merge, the agents do the legwork in between.",
+    "chain": {
+      "me": "Me",
+      "meSub": "scope · decide",
+      "claude": "Claude Code",
+      "claudeSub": "plans, splits the work",
+      "agents": [
+        {
+          "name": "explore",
+          "sub": "maps the codebase"
+        },
+        {
+          "name": "build",
+          "sub": "test first, small slices"
+        },
+        {
+          "name": "review",
+          "sub": "fresh context, fresh eyes"
+        }
+      ],
+      "main": "main",
+      "mainSub": "only what I understand",
+      "parallel": "parallel subagents",
+      "thatsMe": "that’s me"
+    },
+    "contextLabel": "Context it starts with",
+    "context": [
+      "CLAUDE.md",
+      "AGENTS.md",
+      "skills/",
+      "memory/",
+      "MCP servers"
+    ],
+    "guardrailsLabel": "Guardrails I keep",
+    "guardrails": [
+      "Evals against hand-written truth",
+      "Schema-validated output",
+      "The model reads, the code decides",
+      "I review every merge"
+    ]
+  },
+  "stack": {
+    "lead": "Grouped the way I use them. A coloured key is daily work, a white one has shipped in a real project, a dashed one is what I’m exploring.",
+    "legend": {
+      "daily": "daily",
+      "used": "used in real projects",
+      "exploring": "exploring"
+    },
+    "groups": [
+      {
+        "key": "ai",
+        "name": "AI & agents",
+        "keys": [
+          {
+            "label": "Claude Code",
+            "level": "daily"
+          },
+          {
+            "label": "Subagents & orchestration",
+            "level": "daily"
+          },
+          {
+            "label": "Context engineering",
+            "level": "daily"
+          },
+          {
+            "label": "Skills",
+            "level": "daily"
+          },
+          {
+            "label": "MCP servers",
+            "level": "daily"
+          },
+          {
+            "label": "n8n",
+            "level": "used"
+          },
+          {
+            "label": "NVIDIA NIM",
+            "level": "used"
+          },
+          {
+            "label": "Voice agents",
+            "level": "used"
+          },
+          {
+            "label": "OpenAI API",
+            "level": "exploring"
+          }
+        ]
+      },
+      {
+        "key": "frontend",
+        "name": "Frontend",
+        "keys": [
+          {
+            "label": "HTML",
+            "level": "daily"
+          },
+          {
+            "label": "CSS",
+            "level": "daily"
+          },
+          {
+            "label": "TypeScript",
+            "level": "daily"
+          },
+          {
+            "label": "React",
+            "level": "daily"
+          },
+          {
+            "label": "Next.js",
+            "level": "daily"
+          },
+          {
+            "label": "Tailwind CSS",
+            "level": "daily"
+          },
+          {
+            "label": "JavaScript",
+            "level": "used"
+          },
+          {
+            "label": "Astro",
+            "level": "used"
+          },
+          {
+            "label": "Recharts",
+            "level": "used"
+          },
+          {
+            "label": "Radix · shadcn",
+            "level": "used"
+          },
+          {
+            "label": "MapLibre",
+            "level": "exploring"
+          }
+        ]
+      },
+      {
+        "key": "backend",
+        "name": "Backend & data",
+        "keys": [
+          {
+            "label": "Node.js",
+            "level": "daily"
+          },
+          {
+            "label": "PostgreSQL",
+            "level": "daily"
+          },
+          {
+            "label": "PHP",
+            "level": "used"
+          },
+          {
+            "label": "Symfony",
+            "level": "used"
+          },
+          {
+            "label": "MySQL",
+            "level": "used"
+          },
+          {
+            "label": "Drizzle",
+            "level": "used"
+          },
+          {
+            "label": "Power BI",
+            "level": "used"
+          },
+          {
+            "label": "Java",
+            "level": "used"
+          },
+          {
+            "label": "Python",
+            "level": "exploring"
+          }
+        ]
+      },
+      {
+        "key": "infra",
+        "name": "Infra & DevOps",
+        "keys": [
+          {
+            "label": "Docker",
+            "level": "daily"
+          },
+          {
+            "label": "Linux VPS",
+            "level": "daily"
+          },
+          {
+            "label": "Cloudflare",
+            "level": "daily"
+          },
+          {
+            "label": "GitHub",
+            "level": "daily"
+          },
+          {
+            "label": "Traefik",
+            "level": "used"
+          },
+          {
+            "label": "GitHub Actions",
+            "level": "used"
+          },
+          {
+            "label": "Railway",
+            "level": "used"
+          }
+        ]
+      },
+      {
+        "key": "quality",
+        "name": "Quality & process",
+        "keys": [
+          {
+            "label": "Jira",
+            "level": "daily"
+          },
+          {
+            "label": "Agile",
+            "level": "daily"
+          },
+          {
+            "label": "Playwright",
+            "level": "used"
+          },
+          {
+            "label": "Vitest",
+            "level": "used"
+          },
+          {
+            "label": "Gherkin",
+            "level": "used"
+          },
+          {
+            "label": "zod",
+            "level": "used"
+          },
+          {
+            "label": "Confluence",
+            "level": "used"
+          }
+        ]
+      }
+    ]
+  },
+  "about": {
+    "headline": "Building and testing software that people already use every day.",
+    "paragraphs": [
+      "I started programming well before the syllabus got there: while class was on the theory, I had already broken and fixed the practical at home. So I read the actual documentation, try things, and take nothing as good until I’ve seen it run.",
+      "Today I’m in my second year of DAW while working in three places: full-stack at mesoestetic®, the internal app at ESYPA CASA, and QA at PROVEN.",
+      "The model writes roughly 90% of the keystrokes. The other 10% is the job: scoping the problem, deciding what’s worth shipping, debugging what the model got wrong, and understanding every line that ends up in main."
+    ],
+    "signature": "— Roger",
+    "facts": [
+      {
+        "label": "based in",
+        "value": "Barcelona, Spain"
+      },
+      {
+        "label": "speaks",
+        "value": "Català · Español · English"
+      },
+      {
+        "label": "works",
+        "value": "Remote · hybrid in BCN"
+      }
+    ],
+    "services": {
+      "label": "What I can do for you",
+      "items": [
+        {
+          "title": "A fast site that’s ready to sell",
+          "text": "As fast as this very site, findable on Google, and with a form whose messages actually arrive where they should."
+        },
+        {
+          "title": "Automate repetitive tasks with AI",
+          "text": "That manual process you run every week, turned into something that runs on its own and tells you when something doesn’t add up."
+        },
+        {
+          "title": "Testing that prevents production surprises",
+          "text": "Every release goes through the scenarios your customers really use before it reaches them."
+        }
+      ]
+    }
+  },
+  "contact": {
+    "title": "Say hi.",
+    "lead": "Barcelona — on-site, hybrid or remote. Reach out even if the fit isn’t obvious.",
+    "email": "crtitofarez@gmail.com",
+    "replyLabel": "USUALLY REPLIES IN",
+    "reply": "1–2 days"
+  }
+}
